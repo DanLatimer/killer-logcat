@@ -1,5 +1,8 @@
+var LogEntryDataStore = require('./LogEntryDataStore.js');
 var LogcatEntry = require('./LogcatEntry.js');
 var split = require('split');
+
+var logEntryDataStore = new LogEntryDataStore();
 
 /**
  * Parse the line and save it to internal data structures
@@ -13,7 +16,10 @@ var handleLine = function (line) {
         return;
     }
 
+    logEntryDataStore.addLogEntry(logcatEntry);
+
     console.log('new line, tag: ' + logcatEntry.tag);
+
 };
 
 /**
