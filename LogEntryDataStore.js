@@ -25,8 +25,6 @@ LogEntryDataStore.prototype.addLogEntry = function(logEntry) {
     var stmt = db.prepare("INSERT INTO LogEntries (LogLevel, Tag) VALUES (?, ?)");
     stmt.run(logEntry.logLevel, logEntry.tag);
     stmt.finalize();
-
-    this.getUniqueTags();
 };
 
 LogEntryDataStore.prototype.getUniqueTags = function() {
