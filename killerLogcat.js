@@ -22,13 +22,31 @@ var handleLine = function (line) {
 
 };
 
+function startReadingFromAdb() {
+    var child_process = require('child_process');
+    var logcat_process = child_process.spawn("cat", ["./sample_logcat.txt"]);
+    logcat_process.stdout.pipe(split()).on('data', handleLine);
+    logcat_process.stdout.on('end', function(data) {
+        //file.end();
+        console.log("Logcat process has ended.");
+    });
+    logcat_process.on('exit', function(code) {
+        if (code != 0) {
+            console.log('Failed: ' + code);
+        }
+    });
+}
+
+function startReadingCommandLineParams() {
+
+}
+
 /**
  * Main execution of the killer-logcat program
  */
 function startService() {
-    process.stdin.pipe(split()).on('data', handleLine);
-
-    // TODO: user interface control
+    startReadingFromAdb();
+    startReadingCommandLineParams();
 }
 
 startService();
